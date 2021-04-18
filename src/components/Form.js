@@ -1,5 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from "@emotion/styled";
+
+
+
+//---------STYLED COMPONENTS
 
 const Campo =styled.div`
     display:flex;
@@ -41,12 +45,52 @@ const Button =styled.button`
     }
 
 `;
+
+const Error =styled.div`
+    background-color:red;
+    color:white;
+    padding:1rem;
+    width:100%;
+    text-align:center;
+    margin-bottom: 2rem;
+`;
 const Form = () => {
+    const [datos, guardarDatos]= useState({
+        marca:"",
+        anno:"",
+        plan:""
+    })
+
+    const [error, guardarError] = useState (false)
+
+    //Extraemos los valores del State
+    const {marca, anno, plan} = datos;
+
+
+    //Leer datos del formulario y pasarlos al state
+    const obtenerDatos = e =>{
+        guardarDatos({
+            ...datos,
+            [e.target.name]: e.target.value
+        })
+    }
+    //cuando se presiona Submit
+    const cotizarSeguro =e=>{
+        e.preventDefault();
+        if(marca.trim()===""|| anno.trim()===""|| plan.trim()===""){
+            guardarError(true);
+            return;
+        }
+        guardarError(false)
+    }
+
+
     return (
-        <form>
+        <form onSubmit={cotizarSeguro}>
+            {error? <Error>Todos los campos son obligatorios</Error> : null }
             <Campo>
-                <Label>Marca</Label>
-                <Select>
+                <Label>Marca*</Label>
+                <Select name="marca" value={marca} onChange={obtenerDatos}>
                     <option value="">--- Seleccione----</option>
                     <option value="SEAT">SEAT</option>
                     <option value="BMW">BMW</option>
@@ -56,8 +100,8 @@ const Form = () => {
                 </Select>
             </Campo>
             <Campo>
-                <Label>Año</Label>
-                <Select>
+                <Label>Año*</Label>
+                <Select name="anno" value={anno} onChange={obtenerDatos}>
                     <option value="">--- Seleccione----</option>
                     <option value="2010">2010</option>
                     <option value="2011">2011</option>
@@ -67,19 +111,23 @@ const Form = () => {
                 </Select>
             </Campo>
             <Campo>
-            <Label>Plan</Label>
+                <Label>Plan*</Label>
                 <InputRadio
                 type="radio"
                 name="plan"
                 value="basico"
+                checked={plan==="basico"}
+                onChange={obtenerDatos}
                 />basico
                 <InputRadio
                 type="radio"
                 name="plan"
-                value="Completo"
+                value="completo"
+                checked={plan==="completo"}
+                onChange={obtenerDatos}
                 />Completo
             </Campo>
-            <Button>Cotizar</Button>
+            <Button type ="submit">Cotizar</Button>
         </form>
         
     )

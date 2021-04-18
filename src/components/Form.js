@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from "@emotion/styled";
-
+import {obtenerDiferenciaAnno} from "../helper"
 
 
 //---------STYLED COMPONENTS
@@ -82,6 +82,19 @@ const Form = () => {
             return;
         }
         guardarError(false)
+
+        //obtener diferencia de años
+        const diferencia= obtenerDiferenciaAnno(anno)
+
+        //base de cotizacion
+        let resultado =1500;
+
+        //obtener dif de años, por cada año hay que restar el 3%
+        resultado -= ((diferencia * 3) * resultado) / 100;
+        
+        //Aumenta precio: Seat 5% , BMW y mercedes 30%, ford 15%
+        resultado = calcularMarca(marca * resultado)
+        //Plan Basico aumenta 20%, plan completo 50%
     }
 
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from "@emotion/styled";
-import {obtenerDiferenciaAnno} from "../helper"
+import {obtenerDiferenciaAnno, calcularMarca, obtenerPlan} from "../helper"
 
 
 //---------STYLED COMPONENTS
@@ -54,7 +54,7 @@ const Error =styled.div`
     text-align:center;
     margin-bottom: 2rem;
 `;
-const Form = () => {
+const Form = ( {guardarResumen}) => {
     const [datos, guardarDatos]= useState({
         marca:"",
         anno:"",
@@ -93,8 +93,18 @@ const Form = () => {
         resultado -= ((diferencia * 3) * resultado) / 100;
         
         //Aumenta precio: Seat 5% , BMW y mercedes 30%, ford 15%
-        resultado = calcularMarca(marca * resultado)
+        resultado = calcularMarca(marca * resultado);
+
         //Plan Basico aumenta 20%, plan completo 50%
+
+        const incrementoPlan = obtenerPlan(plan);
+        resultado = parseFloat( incrementoPlan * resultado).toFixed(2)
+
+
+        guardarResumen({
+            cotización: resultado,
+            datos,
+        })
     }
 
 

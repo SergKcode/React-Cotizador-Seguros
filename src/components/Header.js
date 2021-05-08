@@ -16,10 +16,13 @@ font-family: 'Slabo 27px',serif;
 text-align:center;
 
 `;
-export const Header = ({titulo}) => {
+const Header = ({titulo}) => {
     return (
         <ContenedorHeader>
             <TextoHeader>{titulo}</TextoHeader>
         </ContenedorHeader>
     )
 }
+
+
+export default Header

@@ -1,5 +1,7 @@
 import React from 'react';
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
+import { TransitionGroup, CSSTransition  } from 'react-transition-group';
+import PropTypes from 'prop-types';
 
 const ResultadoCotizacion =styled.div`
     text-align:center;
@@ -35,7 +37,19 @@ const Resultado = ({cotizacion}) => {
         : 
         (
             <ResultadoCotizacion>
-                <TextoCotización>El total es: ${cotizacion}</TextoCotización>
+                <TransitionGroup
+                    component="p"
+                    className="resultado"
+                >
+                    <CSSTransition  
+                        classNames="resultado"
+                        key={cotizacion}
+                        timeout={{enter: 500 , exit: 500}}
+                    >
+                        <TextoCotización>El total es: ${cotizacion}</TextoCotización>
+                    </CSSTransition>
+                </TransitionGroup>
+                
             </ResultadoCotizacion>
         )
     )

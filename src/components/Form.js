@@ -54,7 +54,7 @@ const Error =styled.div`
     text-align:center;
     margin-bottom: 2rem;
 `;
-const Form = ( {guardarResumen}) => {
+const Form = ( {guardarResumen, guardarCargando}) => {
     const [datos, guardarDatos]= useState({
         marca:"",
         anno:"",
@@ -98,13 +98,22 @@ const Form = ( {guardarResumen}) => {
         //Plan Basico aumenta 20%, plan completo 50%
 
         const incrementoPlan = obtenerPlan(plan);
-        resultado = parseFloat( incrementoPlan * resultado).toFixed(2)
+        resultado = parseFloat( incrementoPlan * resultado).toFixed(2);
 
+        guardarCargando(true);
 
-        guardarResumen({
-            cotización: resultado,
-            datos,
-        })
+        setTimeout(() => {
+
+            // Elimina el spinner
+            guardarCargando(false);
+
+            // pasa la información al componente principal
+            guardarResumen({
+                cotizacion: Number(resultado),
+                datos
+            });
+        }, 3000);
+
     }
 
 

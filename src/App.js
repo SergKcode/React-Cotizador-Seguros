@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
-import Form from './components/Form';
+import Formulario from './components/Formulario';
 import Resumen from './components/Resumen';
 import Resultado from './components/Resultado';
 import Spinner from './components/Spinner';
@@ -22,7 +22,7 @@ function App() {
       cotizacion: 0,
       datos: {
         marca: '',
-        anno: '',
+        year: '',
         plan: ''
       }
   });
@@ -39,7 +39,7 @@ function App() {
         />
 
         <ContenedorFormulario>
-            <Form
+            <Formulario 
               guardarResumen={guardarResumen}
               guardarCargando={guardarCargando}
             />
